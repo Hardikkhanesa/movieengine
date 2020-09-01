@@ -6,6 +6,8 @@ export default function SearchMovie(){
 
 const [query, setQuery] = useState('');
 
+const [movies, setMovies]=useState([]);
+
 const searchMovies = async(e) => {
     e.preventDefault();
     
@@ -18,7 +20,9 @@ const searchMovies = async(e) => {
     const data=await res.json();
     
 
-    console.log(data);
+    // console.log(data.results);
+    setMovies(data.results);
+
     }
     catch(err)
     {
@@ -27,11 +31,21 @@ const searchMovies = async(e) => {
 }
 
     return(
+        <>
         <form className="form" onSubmit={searchMovies}>
             <label className="label" htmlFor="query" >Movie Name</label>
             <input className="input" type="text" name="query" placeholder="Seach movie name" value={query} onChange={(e) => setQuery(e.target.value)} />
             
             <button className="button" type="submit">Submit</button>
         </form>
+        <div className="card-list">
+            {movies.filter(movie => movie.poster_path).map(movie => (
+                <div className="card" key={movie.id}>
+               <img className="card--image" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title + " poster"} />
+                </div>
+            ))
+            }
+        </div>
+        </>
     )
 }
