@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import MovieCard from './movieCard.js'
 
 export default function SearchMovie(){
 
@@ -40,11 +40,8 @@ const searchMovies = async(e) => {
         </form>
         <div className="card-list">
             {movies.filter(movie => movie.poster_path).map(movie => (
-                <div className="card" key={movie.id}>
-               <img className="card--image" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title + " poster"} />
-                </div>
-            ))
-            }
+            <MovieCard movie={movie} key={movie.id}/>
+        ))}
         </div>
         </>
     )
